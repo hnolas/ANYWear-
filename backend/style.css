@@ -1,0 +1,16 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f9;
+    color: #333;
+}
+
+.big-font {
+    font-size: 20px;
+    color: #ff6347;
+}
+
+header {
+    background-color: #fff;
+    padding: 10px;
+    border-bottom: 2px solid #ccc;
+}
