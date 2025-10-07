@@ -1,0 +1,63 @@
+<div class="flex w-full flex-auto flex-col">
+    <div class="mx-auto flex w-full flex-wrap p-6 md:p-8">
+        <!-- Title and action buttons -->
+        <div class="flex w-full items-center justify-between">
+            <div>
+                <div class="text-3xl font-semibold leading-8 tracking-tight">
+                    Participant Data: {{ pid }}
+                </div>
+                <div class="text-secondary font-medium tracking-tight mb-8">
+                    Detailed information for participant {{ pid }}.
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="mt-8 grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Participant TIR Overview -->
+            <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow sm:col-span-2 lg:col-span-3">
+                <div class="ml-10 mr-6 mt-10 flex items-center justify-between sm:mr-10">
+                    <div class="flex flex-col">
+                        <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">
+                            Daily Avg Glucose Trend
+                        </div>
+                        <div class="text-secondary font-medium">
+                            Daily Avg Glucose Trend
+                        </div>
+                    </div>
+                </div>
+                <div class="flex h-96 flex-auto flex-col">  <!-- Increased height -->
+                    <canvas id="dailyAvgGlucoseChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Participant TIR Overview -->
+            <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow sm:col-span-2 lg:col-span-3">
+                <div class="ml-10 mr-6 mt-10 flex items-center justify-between sm:mr-10">
+                    <div class="flex flex-col">
+                        <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">
+                            <!-- You can add the chart title or participant name here -->
+                        </div>
+                        <div class="text-secondary font-medium">
+                            <!-- Additional info like date range, etc. can go here -->
+                        </div>
+                    </div>
+                </div>
+                <div class="flex h-96 flex-auto flex-col">
+                    <h3 class="text-lg font-semibold hourly-glucose-title">Hourly Glucose Trend</h3>
+                    <canvas id="hourlyGlucoseChart"></canvas>
+                    <!-- Custom Tooltip Element -->
+                    <div id="chartjs-tooltip" style="opacity: 0; position: absolute; background-color: rgba(0,0,0,0.7); color: white; border-radius: 3px; padding: 5px; pointer-events: none;"></div>
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+

@@ -1,0 +1,130 @@
+<div class="flex w-full flex-auto flex-col">
+    <div class="mx-auto flex w-full flex-wrap p-6 md:p-8">
+        <!-- Title and action buttons -->
+        <div class="flex w-full items-center justify-between">
+            <div>
+                <div class="text-3xl font-semibold leading-8 tracking-tight">
+                    CGM QA Data Dashboard
+                </div>
+                <div class="text-secondary font-medium tracking-tight">
+                    Monitor Continuous Glucose Monitoring QA page
+                </div>
+            </div>
+        </div>
+
+        <div class="tiles-container">
+            <!-- Average Glucose Level -->
+            <div class="tile bg-blue-500 text-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                <div class="tile-title">Average Glucose</div>
+                <div class="tile-value text-4xl font-bold">{{ averageGlucose | number:'1.0-1' }} mg/dL</div>
+            </div>
+
+            <!-- Time in Range (TIR) -->
+            <div class="tile bg-green-500 text-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                <div class="tile-title">Time in Range (TIR)</div>
+                <div class="tile-value text-4xl font-bold">{{ timeInRange | number:'1.0-1' }}%</div>
+                <div class="tile-subtext text-pop mt-2">Target: 70-180 mg/dL</div>
+            </div>
+
+            <!-- Hypoglycemia Events Tile -->
+            <div class="tile bg-red-500 text-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out relative">
+                <div class="tile-title">Hypoglycemia Events</div>
+                <div class="tile-value text-4xl font-bold">{{ totalHypoEvents }} events</div>
+                <div class="tile-subtext text-pop mt-2">Threshold: &lt; 70 mg/dL</div>
+                <button class="absolute top-2 right-2 bg-white text-red-500 rounded-full p-1" (click)="openHypoModal()">&#x25BC;</button>
+            </div>
+
+            <!-- Hypoglycemia Modal -->
+            <div *ngIf="showHypoModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" (click)="closeHypoModal()">&times;</span>
+                    <h3>Hypoglycemia Events</h3>
+                    <ul>
+                        <li *ngFor="let event of hypoglycemiaEvents">
+                            {{ event.pid }}: {{ event.events }} events
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Hyperglycemia Events Tile -->
+            <div class="tile bg-orange-500 text-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out relative">
+                <div class="tile-title">Hyperglycemia Events</div>
+                <div class="tile-value text-4xl font-bold">{{ totalHyperEvents }} events</div>
+                <div class="tile-subtext text-pop mt-2">Threshold: &gt; 180 mg/dL</div>
+                <button class="absolute top-2 right-2 bg-white text-orange-500 rounded-full p-1" (click)="openHyperModal()">&#x25BC;</button>
+            </div>
+
+            <!-- Hyperglycemia Modal -->
+            <div *ngIf="showHyperModal" class="modal">
+                <div class="modal-content">
+                    <span class="close" (click)="closeHyperModal()">&times;</span>
+                    <h3>Hyperglycemia Events</h3>
+                    <ul>
+                        <li *ngFor="let event of hyperglycemiaEvents">
+                            {{ event.pid }}: {{ event.events }} events
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Total Participants Tile -->
+            <div class="tile bg-purple-500 text-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                <div class="tile-title">Total Participants in Baseline</div>
+                <div class="tile-value text-4xl font-bold">{{ totalParticipants }}</div>
+            </div>
+
+            <!-- Average TIR per Participant Tile -->
+            <div class="tile bg-teal-500 text-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                <div class="tile-title">Avg. TIR per Participant</div>
+                <div class="tile-value text-4xl font-bold">{{ avgTirPerParticipant | number:'1.0-1' }}%</div>
+            </div>
+
+             <!-- Glucose Variability Tile -->
+            <div class="tile bg-indigo-500 text-white p-4 rounded-lg shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out">
+                <div class="tile-title">Glucose Variability</div>
+                <div class="tile-value text-4xl font-bold">{{ glucoseVariability | number:'1.0-1' }} mg/dL</div>
+            </div>
+        </div>
+
+
+        <div class="mt-8 grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Days Worn Overview -->
+            <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow sm:col-span-2 lg:col-span-3">
+                <div class="ml-10 mr-6 mt-10 flex items-center justify-between sm:mr-10">
+                    <div class="flex flex-col">
+                        <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">
+                            Days Worn Overview
+                        </div>
+                        <div class="text-secondary font-medium">
+                            Number of days the device was worn
+                        </div>
+                    </div>
+                </div>
+                <div class="flex h-80 flex-auto flex-col">
+                    <canvas id="myChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <div class="mt-8 grid w-full grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            <!-- Participant TIR Overview -->
+            <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow sm:col-span-2 lg:col-span-3">
+                <div class="ml-10 mr-6 mt-10 flex items-center justify-between sm:mr-10">
+                    <div class="flex flex-col">
+                        <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">
+                            Participant TIR Overview
+                        </div>
+                        <div class="text-secondary font-medium">
+                            Participant Time in Range (TIR) Overview
+                        </div>
+                    </div>
+                </div>
+                <div class="flex h-96 flex-auto flex-col">  <!-- Increased height -->
+                    <canvas id="timeInRangesChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

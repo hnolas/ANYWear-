@@ -1,0 +1,119 @@
+<div class="flex w-full flex-auto flex-col">
+    <div class="mx-auto flex w-full flex-wrap p-6 md:p-8">
+        <!-- Title -->
+        <div class="flex w-full items-center justify-between">
+            <div>
+                <div class="text-3xl font-semibold leading-8 tracking-tight">
+                    Participant Dashboard for {{ selectedPid }}
+                </div>
+                <div class="text-secondary font-medium tracking-tight">
+                    Overview of participant's accelerometer data
+                </div>
+            </div>
+        </div>
+
+        <!-- Tiles for Summary Metrics (Using Flexbox for better responsiveness) -->
+        <div class="flex flex-wrap justify-between gap-4 w-full">
+            <div class="tile bg-blue-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[250px]">
+                <div class="tile-title">Average Non-Wear Percentage</div>
+                <div class="tile-value text-4xl font-bold">{{ participantData?.[0]?.nonwear_perc_day_spt | number:'1.2-2' }}%</div>
+            </div>
+
+            <div class="tile bg-green-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[250px]">
+                <div class="tile-title">Average Sedentary Time</div>
+                <div class="tile-value text-4xl font-bold">{{ participantData?.[0]?.dur_day_total_IN_min / 60 | number:'1.2-2' }} hours</div>
+            </div>
+
+            <div class="tile bg-yellow-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[250px]">
+                <div class="tile-title">Average Light Activity</div>
+                <div class="tile-value text-4xl font-bold">{{ participantData?.[0]?.dur_day_total_LIG_min / 60 | number:'1.2-2' }} hours</div>
+            </div>
+
+            <div class="tile bg-red-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[250px]">
+                <div class="tile-title">Average Moderate Activity</div>
+                <div class="tile-value text-4xl font-bold">{{ participantData?.[0]?.dur_day_total_MOD_min / 60 | number:'1.2-2' }} hours</div>
+            </div>
+
+            <div class="tile bg-purple-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[250px]">
+                <div class="tile-title">Average Sleep (Hours)</div>
+                <div class="tile-value text-4xl font-bold">{{ participantData?.[0]?.dur_spt_min / 60 | number:'1.2-2' }} hours</div>
+            </div>
+        </div>
+
+        <!-- Wear Time Chart (Full Width) -->
+        <div class="mt-8 w-full">
+            <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow w-full">
+                <div class="ml-10 mr-6 mt-10 flex items-center justify-between">
+                    <div class="flex flex-col">
+                        <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">
+                            Daily Wear Time Trends
+                        </div>
+                        <div class="text-secondary font-medium">
+                            Visualize daily recorded wear time
+                        </div>
+                    </div>
+                </div>
+                <div class="flex h-80 w-full flex-auto flex-col">
+                    <canvas id="wearTimeChart" style="width: 100%; height: 100%;"></canvas> <!-- Ensure full width -->
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow w-full mt-8">
+            <div class="ml-10 mr-6 mt-10 flex items-center justify-between">
+                <div class="flex flex-col">
+                    <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">
+                        Sleep Hours & Efficiency Overview
+                    </div>
+                    <div class="text-secondary font-medium">
+                        View daily sleep hours and efficiency trends
+                    </div>
+                </div>
+            </div>
+            <div class="flex h-80 w-full flex-auto flex-col">
+                <canvas id="sleepHoursEfficiencyChart" style="width: 100%; height: 100%;"></canvas> <!-- Chart for sleep hours and efficiency -->
+            </div>
+        </div>
+
+
+        <!-- Sleep Patterns Chart (Full Width) -->
+<!--        <div class="mt-8 w-full">-->
+<!--            <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow w-full">-->
+<!--                <div class="ml-10 mr-6 mt-10 flex items-center justify-between">-->
+<!--                    <div class="flex flex-col">-->
+<!--                        <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">-->
+<!--                            Sleep Patterns Overview-->
+<!--                        </div>-->
+<!--                        <div class="text-secondary font-medium">-->
+<!--                            View daily sleep onset and wakeup trends-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--                <div class="flex h-80 w-full flex-auto flex-col">-->
+<!--                    <canvas id="sleepChart" style="width: 100%; height: 100%;"></canvas> &lt;!&ndash; Ensure full width &ndash;&gt;-->
+<!--                </div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <!-- Sleep and activity Patterns Chart (Full Width) -->
+        <div class="mt-8 w-full">
+            <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow w-full">
+                <div class="ml-10 mr-6 mt-10 flex items-center justify-between">
+                    <div class="flex flex-col">
+                        <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">
+                            Sleep and Activity Patterns
+                        </div>
+                        <div class="text-secondary font-medium">
+                            View Sleep and Activity Patterns
+                        </div>
+                    </div>
+                </div>
+                <div class="flex h-80 w-full flex-auto flex-col">
+                    <canvas id="activitySleepChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

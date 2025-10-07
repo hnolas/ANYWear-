@@ -1,0 +1,42 @@
+<div class="container mx-auto px-4 md:px-8 mt-6 w-full">
+    <!-- PID Dropdown -->
+    <div class="mb-4">
+        <label for="pid" class="block mb-2 text-sm font-medium text-white">Select PID:</label>
+        <select id="pid" [(ngModel)]="selectedPid" (change)="onPidChange()"
+                class="bg-gray-800 border border-gray-700 text-white text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 shadow-sm">
+            <option *ngFor="let pid of pids" [value]="pid">{{ pid }}</option>
+        </select>
+    </div>
+
+    <!-- Date Buttons -->
+    <div class="mb-6">
+        <label class="block mb-2 text-sm font-medium text-white">Select Date:</label>
+        <div *ngIf="datesForSelectedPid.length > 0" class="flex flex-wrap p-2 bg-gray-800 rounded-lg">
+            <button *ngFor="let date of datesForSelectedPid"
+                    (click)="onDateSelected(date)"
+                    class="date-button mr-3 mb-2 py-2 px-5 rounded-lg transition-all duration-200 ease-in-out">
+                {{ date }}
+            </button>
+        </div>
+        <div *ngIf="datesForSelectedPid.length === 0" class="p-3 bg-gray-800 rounded-lg">
+            <p class="text-sm text-gray-400">No dates available for this PID.</p>
+        </div>
+    </div>
+
+    <!-- Combined Chart -->
+    <div class="bg-gray-900 flex flex-auto flex-col overflow-hidden rounded-lg shadow-md w-full border border-gray-700">
+        <div class="px-5 pt-5 pb-3">
+            <div class="flex flex-col w-full">
+                <div class="text-xl font-semibold text-white md:text-2xl mb-1">
+                    Combined Glucose, Activity, and Sleep Patterns
+                </div>
+                <div class="text-gray-400 text-sm">
+                    View Combined Patterns
+                </div>
+            </div>
+        </div>
+        <div class="flex h-[600px] w-full flex-auto flex-col px-4 pb-5">
+            <canvas id="combinedChart"></canvas>
+        </div>
+    </div>
+</div>

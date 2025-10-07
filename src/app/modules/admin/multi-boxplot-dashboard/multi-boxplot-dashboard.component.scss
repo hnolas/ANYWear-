@@ -1,0 +1,195 @@
+/* multi_boxplot_dashboard.component.scss */
+.flex {
+    display: flex;
+}
+
+.flex-wrap {
+    flex-wrap: wrap;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.flex-col {
+    flex-direction: column;
+}
+
+.w-full {
+    width: 100%;
+}
+
+.mx-auto {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.p-6 {
+    padding: 1.5rem;
+}
+
+.mb-6 {
+    margin-bottom: 1.5rem;
+}
+
+.mb-8 {
+    margin-bottom: 2rem;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.justify-between {
+    justify-content: space-between;
+}
+
+.justify-end {
+    justify-content: flex-end;
+}
+
+.gap-4 {
+    gap: 1rem;
+}
+
+.gap-6 {
+    gap: 1.5rem;
+}
+
+.text-white {
+    color: white;
+}
+
+.text-3xl {
+    font-size: 1.875rem;
+}
+
+.text-4xl {
+    font-size: 2.25rem;
+}
+
+.font-semibold {
+    font-weight: 600;
+}
+
+.font-bold {
+    font-weight: 700;
+}
+
+.leading-7 {
+    line-height: 1.75rem;
+}
+
+.leading-8 {
+    line-height: 2rem;
+}
+
+.tracking-tight {
+    letter-spacing: -0.025em;
+}
+
+.rounded-lg {
+    border-radius: 0.5rem;
+}
+
+.rounded-2xl {
+    border-radius: 1rem;
+}
+
+.rounded {
+    border-radius: 0.25rem;
+}
+
+.shadow-lg {
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+}
+
+.shadow {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+// Tile specific styling
+.tile {
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: #ffffff;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    min-width: 200px;
+
+    &:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+    }
+}
+
+.tile-title {
+    font-size: 1rem;
+    font-weight: 500;
+    opacity: 0.9;
+}
+
+.tile-value {
+    font-size: 2rem;
+    font-weight: 700;
+    margin-top: 0.5rem;
+}
+
+// Text colors
+.text-secondary {
+    color: #6b7280;
+}
+
+// Background colors (for reference)
+.bg-indigo-700 {
+    background-color: #4338ca;
+}
+
+.bg-purple-600 {
+    background-color: #7c3aed;
+}
+
+.bg-orange-500 {
+    background-color: #f97316;
+}
+
+.bg-blue-600 {
+    background-color: #2563eb;
+}
+
+.bg-green-600 {
+    background-color: #16a34a;
+}
+
+.bg-red-500 {
+    background-color: #ef4444;
+}
+
+// Button hover states
+button {
+    transition: background-color 0.2s;
+
+    &:hover {
+        filter: brightness(110%);
+    }
+}
+
+// Box plot container styling
+.bg-card {
+    background-color: #ffffff;
+
+    &.dark {
+        background-color: #f8f9fa;
+    }
+}
+
+// Media query for responsiveness
+@media (max-width: 768px) {
+    .md\:p-8 {
+        padding: 2rem;
+    }
+
+    .md\:text-3xl {
+        font-size: 1.875rem;
+    }
+}

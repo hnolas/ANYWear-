@@ -1,0 +1,149 @@
+<div class="flex w-full flex-auto flex-col">
+    <div class="mx-auto flex w-full flex-wrap p-6 md:p-8">
+        <!-- Title -->
+        <div class="flex w-full items-center justify-between">
+            <div>
+                <div class="text-3xl font-semibold leading-8 tracking-tight">
+                    Accelerometer QC Data Dashboard
+                </div>
+                <div class="text-secondary font-medium tracking-tight">
+                    Monitor Accelerometer Data Quality Control
+                </div>
+            </div>
+        </div>
+
+        <!-- Tiles for Summary Metrics (Using Flexbox for better responsiveness) -->
+        <div class="flex flex-wrap justify-between gap-4 w-full">
+            <div class="tile bg-blue-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[250px]">
+                <div class="tile-title">Total Files Processed</div>
+                <div class="tile-value text-4xl font-bold">{{ totalFilesProcessed }}</div>
+            </div>
+
+            <div class="tile bg-green-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[250px]">
+                <div class="tile-title">Average Wear Time</div>
+                <div class="tile-value text-4xl font-bold">{{ averageWearTime | number:'1.2-2' }} days</div>
+            </div>
+
+            <div class="tile bg-purple-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[250px]">
+                <div class="tile-title">Average Sleep</div>
+                <div class="tile-value text-4xl font-bold">{{ 7.25 | number:'1.2-2' }} hours</div>
+            </div>
+
+            <div class="tile bg-red-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[250px]">
+                <div class="tile-title">Average Non-Wear Time</div>
+                <div class="tile-value text-4xl font-bold">{{ averageNonWearTime | number:'1.2-2' }} days</div>
+            </div>
+        </div>
+
+        <!-- Wear vs Non-Wear Chart (Full Width) -->
+        <div class="mt-8 w-full">
+            <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow w-full">
+                <div class="ml-10 mr-6 mt-10 flex items-center justify-between">
+                    <div class="flex flex-col">
+                        <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">
+                            Days Worn vs Non-Wear Time Overview
+                        </div>
+                        <div class="text-secondary font-medium">
+                            Compare Wear and Non-Wear Time
+                        </div>
+                    </div>
+                </div>
+                <div class="flex h-80 w-full flex-auto flex-col">
+                    <canvas id="wearVsNonWearChart" style="width: 100%; height: 100%;"></canvas> <!-- Ensure full width -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Box Plots Section (Wear Time, Sleep, and File Size) -->
+        <div class="mt-8 w-full relative">
+            <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow w-full">
+                <div class="ml-10 mr-6 mt-10 flex items-center justify-between">
+                    <div class="flex flex-col">
+                        <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">
+                            Box Plot Overview
+                        </div>
+                        <div class="text-secondary font-medium">
+                            Visualize Wear Time, Sleep, and File Size Distribution
+                        </div>
+
+                        <!-- Visualize Button -->
+                        <div *ngIf="selectedWearTimePIDs.length > 0" class="absolute top-6 right-8 z-20">
+                            <button (click)="visualizeSelectedWearTime()" class="btn btn-primary btn-lg text-white bg-blue-500 hover:bg-blue-600 rounded-md px-4 py-2 shadow-lg">
+                                Visualize Selected Participants
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Flex container for the three box plots -->
+
+                <div class="flex flex-wrap justify-between gap-8 w-full p-6">
+                    <!-- Wear Time Box Plot (ApexCharts container) -->
+                    <div class="flex flex-1 min-w-[300px] relative">
+                        <plotly-plot
+                            [data]="boxPlotData"
+                            [layout]="boxPlotLayout"
+                            (selected)="onWearTimeSelected($event)"
+                            (deselect)="onWearTimeDeselected()"
+                            style="width: 100%; height: 400px;"
+                        ></plotly-plot>
+                    </div>
+
+                    <!-- Visualize Button -->
+                    <!-- Visualize Button -->
+
+
+
+
+                    <!-- Sleep Box Plot (can also be converted to ApexCharts if needed) -->
+                    <!-- Avg Sleep Box Plot -->
+                    <div class="flex flex-1 min-w-[300px]">
+                        <plotly-plot
+                            [data]="sleepBoxPlotData"
+                            [layout]="sleepBoxPlotLayout"
+                            style="width: 100%; height: 400px;"
+                        ></plotly-plot>
+                    </div>
+
+                    <!-- File Size Box Plot (can also be converted to ApexCharts if needed) -->
+                    <div class="flex flex-1 min-w-[300px]">
+                        <plotly-plot
+                            [data]="fileSizeBoxPlotData"
+                            [layout]="fileSizeBoxPlotLayout"
+                            style="width: 100%; height: 400px;"
+                        ></plotly-plot>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- File Metadata Table (Full Width) -->
+        <div class="file-metadata mt-8 w-full">
+            <h2 class="subheader">File Metadata</h2>
+            <table>
+                <thead>
+                <tr>
+                    <th>Participant ID</th>
+                    <th>File Name</th>
+                    <th>Device ID</th>
+                    <th>File Size (MB)</th>
+                    <th>Start Time</th>
+                    <th>End Time</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let file of fileMetadata">
+                    <td>{{ file.participant_id }}</td>
+                    <td>{{ file.file_name }}</td> <!-- Show extracted file name -->
+                    <td>{{ file.device_id }}</td>
+                    <td>{{ file.file_size_MB | number: '1.1-1' }}</td>
+                    <td>{{ file.start_time }}</td>
+                    <td>{{ file.end_time }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

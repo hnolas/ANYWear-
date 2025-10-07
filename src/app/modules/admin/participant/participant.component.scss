@@ -1,0 +1,12 @@
+.chart-container {
+    width: 200%;
+    height: 400px; /* Adjusted height for better visibility */
+    max-height: 100%;
+    margin-bottom: 20px; /* Add margin to space out the charts */
+}
+
+canvas {
+    display: block;
+    width: 100% !important;
+    height: 100% !important; /* Ensure the canvas fills the container */
+}

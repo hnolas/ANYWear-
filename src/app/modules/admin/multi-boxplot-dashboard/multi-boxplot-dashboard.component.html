@@ -1,0 +1,144 @@
+<!-- multi_boxplot_dashboard.component.html -->
+<div class="flex w-full flex-auto flex-col">
+    <div class="mx-auto flex w-full flex-wrap p-6 md:p-8">
+        <!-- Title -->
+        <div class="flex w-full items-center justify-between mb-6">
+            <div>
+                <div class="text-3xl font-semibold leading-8 tracking-tight">
+                    Multi-Parameter Health Dashboard
+                </div>
+                <div class="text-secondary font-medium tracking-tight">
+                    Comprehensive view of participant health metrics
+                </div>
+            </div>
+        </div>
+
+        <!-- Tiles for Summary Metrics -->
+<!--        <div class="flex flex-wrap justify-between gap-4 w-full mb-8">-->
+<!--            <div class="tile bg-indigo-700 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[200px]">-->
+<!--                <div class="tile-title">Total Participants</div>-->
+<!--                <div class="tile-value text-4xl font-bold">{{ totalParticipants }}</div>-->
+<!--            </div>-->
+
+<!--            <div class="tile bg-purple-600 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[200px]">-->
+<!--                <div class="tile-title">Avg. Sleep</div>-->
+<!--                <div class="tile-value text-4xl font-bold">{{ averageSleepTime | number:'1.1-1' }} hrs</div>-->
+<!--            </div>-->
+
+<!--            <div class="tile bg-orange-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[200px]">-->
+<!--                <div class="tile-title">Avg. Glucose</div>-->
+<!--                <div class="tile-value text-4xl font-bold">{{ averageGlucoseLevel | number:'1.0-0' }} mg/dL</div>-->
+<!--            </div>-->
+
+<!--            <div class="tile bg-blue-600 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[200px]">-->
+<!--                <div class="tile-title">Avg. Sedentary</div>-->
+<!--                <div class="tile-value text-4xl font-bold">{{ averageSedentaryTime | number:'1.1-1' }} hrs</div>-->
+<!--            </div>-->
+
+<!--            <div class="tile bg-green-600 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[200px]">-->
+<!--                <div class="tile-title">Avg. MVPA</div>-->
+<!--                <div class="tile-value text-4xl font-bold">{{ averageMVPATime | number:'1.1-1' }} hrs</div>-->
+<!--            </div>-->
+
+<!--            <div class="tile bg-red-500 text-white p-4 rounded-lg shadow-lg flex-1 min-w-[200px]">-->
+<!--                <div class="tile-title">Avg. Calories</div>-->
+<!--                <div class="tile-value text-4xl font-bold">2,250 cal</div>-->
+<!--            </div>-->
+<!--        </div>-->
+
+        <!-- Box Plots Section -->
+        <div class="w-full relative">
+            <div class="bg-card dark flex flex-auto flex-col overflow-hidden rounded-2xl shadow w-full mb-8">
+                <div class="ml-10 mr-6 mt-10 flex items-center justify-between">
+                    <div class="flex flex-col">
+                        <div class="mr-4 text-2xl font-semibold leading-7 tracking-tight md:text-3xl">
+                            Health Metrics Distribution
+                        </div>
+                        <div class="text-secondary font-medium">
+                            Box plots showing distribution of key health parameters
+                        </div>
+                    </div>
+                </div>
+
+                <!-- First row of box plots (3) -->
+                <div class="flex flex-wrap justify-between gap-6 w-full p-6">
+                    <!-- Sleep Box Plot -->
+                    <div class="flex flex-1 min-w-[300px]">
+                        <plotly-plot
+                            [data]="sleepBoxPlotData"
+                            [layout]="sleepBoxPlotLayout"
+                            (selected)="onBoxPlotSelected($event, 'sleep')"
+                            style="width: 100%; height: 400px;"
+                        ></plotly-plot>
+                    </div>
+
+                    <!-- Glucose Box Plot -->
+                    <div class="flex flex-1 min-w-[300px]">
+                        <plotly-plot
+                            [data]="glucoseBoxPlotData"
+                            [layout]="glucoseBoxPlotLayout"
+                            (selected)="onBoxPlotSelected($event, 'glucose')"
+                            style="width: 100%; height: 400px;"
+                        ></plotly-plot>
+                    </div>
+
+                    <!-- Sedentary Activity Box Plot -->
+                    <div class="flex flex-1 min-w-[300px]">
+                        <plotly-plot
+                            [data]="sedentaryBoxPlotData"
+                            [layout]="sedentaryBoxPlotLayout"
+                            (selected)="onBoxPlotSelected($event, 'sedentary')"
+                            style="width: 100%; height: 400px;"
+                        ></plotly-plot>
+                    </div>
+                </div>
+
+                <!-- Second row of box plots (3) -->
+                <div class="flex flex-wrap justify-between gap-6 w-full p-6 pt-0">
+                    <!-- MVPA Box Plot -->
+                    <div class="flex flex-1 min-w-[300px]">
+                        <plotly-plot
+                            [data]="mvpaBoxPlotData"
+                            [layout]="mvpaBoxPlotLayout"
+                            (selected)="onBoxPlotSelected($event, 'mvpa')"
+                            style="width: 100%; height: 400px;"
+                        ></plotly-plot>
+                    </div>
+
+                    <!-- Wear Time Box Plot -->
+                    <div class="flex flex-1 min-w-[300px]">
+                        <plotly-plot
+                            [data]="wearTimeBoxPlotData"
+                            [layout]="wearTimeBoxPlotLayout"
+                            (selected)="onBoxPlotSelected($event, 'wearTime')"
+                            style="width: 100%; height: 400px;"
+                        ></plotly-plot>
+                    </div>
+
+                    <!-- Calories Box Plot -->
+                    <div class="flex flex-1 min-w-[300px]">
+                        <plotly-plot
+                            [data]="caloriesBoxPlotData"
+                            [layout]="caloriesBoxPlotLayout"
+                            (selected)="onBoxPlotSelected($event, 'calories')"
+                            style="width: 100%; height: 400px;"
+                        ></plotly-plot>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Buttons for actions -->
+        <div class="flex justify-end w-full gap-4 mb-8">
+            <button class="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                Export Selected Data
+            </button>
+            <button class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Compare Participants
+            </button>
+            <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded">
+                View Detailed Analysis
+            </button>
+        </div>
+    </div>
+</div>
